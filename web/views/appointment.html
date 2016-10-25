@@ -1,0 +1,56 @@
+<h1>Add Appointments</h1>
+
+<div class="row">
+	<div class="col-sm-12">
+		<form name="appointmentForm" novalidate ng-submit="appointmentCtrl.add()">
+			<div class="form-group" ng-class="{'has-success': appointmentCtrl.validEmail, 'has-error': appointmentCtrl.invalidEmail}">
+				<label for="email">Who:</label>
+				<div class="input-group">
+					<input id="email" type="email" placeholder="Person's email" name="email"
+						   required class="form-control" ng-model="appointmentCtrl.email"> 
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" 
+								ng-class="{'btn-success': appointmentCtrl.validEmail, 'btn-danger': appointmentCtrl.invalidEmail }"
+								ng-click="appointmentCtrl.verify()" ng-disabled="appointmentForm.email.$invalid">
+							Verify
+						</button>
+					</span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="appt-date">Date:</label>
+				<input id="appt-date" type="datetime-local" class="form-control" name="appt-date"
+					   placeholder="Appointment date" required ng-model="appointmentCtrl.date">
+			</div>
+
+			<div class="form-group">
+				<label for="desc">Description:</label>
+				<textarea required rows="5" class="form-control" ng-model="appointmentCtrl.description"></textarea>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary pull-right" 
+						ng-disabled="!appointmentCtrl.validEmail">
+					Create Appointment
+				</button>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+<table class="table table-hover" ng-show="appointmentCtrl.appointments.length > 0">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="a in appointmentCtrl.appointments">
+			<td> {{ a.dateTime | date:'medium' }} </td>
+			<td> {{ a.description }} </td>
+		</tr>
+	</tbody>
+</table>
